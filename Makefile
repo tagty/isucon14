@@ -83,12 +83,15 @@ rotate: mysql-rotate nginx-rotate mysql-restart nginx-reload
 
 BENCH_HOST ?= isu14-1
 BENCH_ADDR ?= 127.0.0.1:443
+# isuride-payment_mock.service が 12345 を使っているのでずらす
+BENCH_PAYMENT_PORT ?= 12346
 
 .PHONY: bench
 bench:
 	ssh $(BENCH_HOST) " \
 		cd /home/isucon; \
-		./bench run --target https://xiv.isucon.net:443 --addr $(BENCH_ADDR)"
+		./bench run --target https://xiv.isucon.net:443 --addr $(BENCH_ADDR) \
+			--payment-bind-port $(BENCH_PAYMENT_PORT) --payment-url http://localhost:$(BENCH_PAYMENT_PORT)"
 
 .PHONY: journalctl
 journalctl:
