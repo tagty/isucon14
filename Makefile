@@ -114,7 +114,7 @@ OUTFORMAT=count,method,uri,min,max,sum,avg,p99
 
 .PHONY: alp
 alp:
-	ssh $(HOST) "sudo alp ltsv --file=/var/log/nginx/access.log --nosave-pos --pos /tmp/alp.pos --sort $(ALPSORT) --reverse -o $(OUTFORMAT) -m $(ALPM) -q"
+	ssh $(HOST) "sudo alp ltsv --file=/var/log/nginx/access.log --nosave-pos --pos /tmp/alp.pos --sort $(ALPSORT) --reverse -o $(OUTFORMAT) -m $(ALPM)"
 
 .PHONY: pprof
 pprof:
