@@ -7,6 +7,7 @@ import (
 	"log/slog"
 	"net"
 	"net/http"
+	_ "net/http/pprof"
 	"os"
 	"os/exec"
 	"strconv"
@@ -20,6 +21,11 @@ import (
 var db *sqlx.DB
 
 func main() {
+	go func() {
+		slog.Info("pprof listening on localhost:6060")
+		http.ListenAndServe("localhost:6060", nil)
+	}()
+
 	mux := setup()
 	slog.Info("Listening on :8080")
 	http.ListenAndServe(":8080", mux)

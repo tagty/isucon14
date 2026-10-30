@@ -22,3 +22,5 @@ env.sh
 local/
 bench
 webapp/payment_mock/payment_mock
+/pprof/*
+!/pprof/.keep
