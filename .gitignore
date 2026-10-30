@@ -18,7 +18,7 @@
 .x
 .zshrc
 env.sh
-go/
+/go/
 local/
 bench
 webapp/payment_mock/payment_mock
