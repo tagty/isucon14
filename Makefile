@@ -81,8 +81,11 @@ env-deploy:
 .PHONY: rotate
 rotate: mysql-rotate nginx-rotate mysql-restart nginx-reload
 
-BENCH_HOST ?= isu14-1
-BENCH_ADDR ?= 127.0.0.1:443
+BENCH_HOST ?= isu14-bench
+# アプリサーバ（isu14-1）の内部 IP
+BENCH_ADDR ?= 172.31.6.14:443
+# ベンチサーバ（isu14-bench）の内部 IP。アプリから決済サーバとして叩かれる
+BENCH_PAYMENT_HOST ?= 172.31.0.187
 # isuride-payment_mock.service が 12345 を使っているのでずらす
 BENCH_PAYMENT_PORT ?= 12346
 
@@ -91,7 +94,7 @@ bench:
 	ssh $(BENCH_HOST) " \
 		cd /home/isucon; \
 		./bench run --target https://xiv.isucon.net:443 --addr $(BENCH_ADDR) \
-			--payment-bind-port $(BENCH_PAYMENT_PORT) --payment-url http://localhost:$(BENCH_PAYMENT_PORT)"
+			--payment-bind-port $(BENCH_PAYMENT_PORT) --payment-url http://$(BENCH_PAYMENT_HOST):$(BENCH_PAYMENT_PORT)"
 
 .PHONY: journalctl
 journalctl:
